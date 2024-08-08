@@ -1,0 +1,5 @@
+baseURL = 'http://example.org/'
+languageCode = 'en-us'
+title = 'Akhil Kurian Kuruvilla'
+theme = 'risotto'
+theme = 'ananke'
