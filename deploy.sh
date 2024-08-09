@@ -24,10 +24,14 @@ hugo --gc --minify > "$LOG_FILE" 2>&1 || { log "Hugo site failed to build."; exi
 echo "Running markdownlint..."
 markdownlint '**/*.md' >> "$LOG_FILE" 2>&1
 if [ $? -ne 0 ]; then
-  log "Markdown linting failed."
-  echo "Markdown linting failed. Do you want to exit and fix it? (yes/no)"
-  read -r user_input
-  if [ "$user_input" = "yes" ]; then
+  read -p "Markdown linting failed. Do you want to exit and fix it? (yes/no) " response
+  if [ "$response" = "yes" ]; then
+    echo "Exiting. Please fix the issues and try again."
+    exit 1
+  elif [ "$response" = "no" ]; then
+    echo "Continuing with commit."
+  else
+    echo "Invalid response. Exiting."
     exit 1
   fi
 fi
