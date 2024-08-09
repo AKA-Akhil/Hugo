@@ -1,6 +1,6 @@
 
 FROM ubuntu:22.04
-#
+
 RUN apt-get update && \
     apt-get install -y \
     wget \
@@ -11,7 +11,7 @@ RUN apt-get update && \
     make \
     curl \
     unzip
-
+#
     RUN wget https://golang.org/dl/go1.21.8.linux-amd64.tar.gz && \
     tar -C /usr/local -xzf go1.21.8.linux-amd64.tar.gz && \
     rm go1.21.8.linux-amd64.tar.gz
