@@ -5,9 +5,9 @@ HUGO_SITE_DIR="."
 LOG_FILE="./deploy.log"
 DOCKER_SCRIPT="./docker.sh"
 
-# Function to log messages
+# Function to log messages and print to terminal
 log() {
-  echo "$(date): $1" >> "$LOG_FILE"
+  echo "$(date): $1" | tee -a "$LOG_FILE"
 }
 
 # Navigate to Hugo site directory
@@ -16,11 +16,11 @@ cd "$HUGO_SITE_DIR" || { log "Failed to change directory to Hugo site."; exit 1;
 # Code testing - Linting and Validation
 log "Starting code testing..."
 echo "Running Hugo tests..."
-hugo --gc --minify > "$LOG_FILE" 2>&1 || { log "Hugo site failed to build."; exit 1; }
+hugo --gc --minify 2>&1 | tee -a "$LOG_FILE" || { log "Hugo site failed to build."; exit 1; }
 
 # Run markdownlint (ensure it is installed on your local machine)
 echo "Running markdownlint..."
-markdownlint '**/*.md' >> "$LOG_FILE" 2>&1
+markdownlint '**/*.md' 2>&1 | tee -a "$LOG_FILE"
 
 if [ $? -ne 0 ]; then
   echo "Markdown linting failed. Asking user to exit or continue..."
