@@ -23,16 +23,14 @@ hugo --gc --minify > "$LOG_FILE" 2>&1 || { log "Hugo site failed to build."; exi
 # Run markdownlint (ensure it is installed on your local machine)
 echo "Running markdownlint..."
 markdownlint '**/*.md' >> "$LOG_FILE" 2>&1
-
+# Run markdownlint (ensure it is installed on your local machine)
+echo "Running markdownlint..."
+markdownlint '**/*.md' >> "$LOG_FILE" 2>&1
 if [ $? -ne 0 ]; then
   echo "Markdown linting failed. Asking user to exit or continue..."
-  ./input.sh
+./input.sh
+  
 
-  # Check the exit status of input.sh
-  if [ $? -ne 0 ]; then
-    exit 1
-  fi
-fi
 
 # Build Docker image
 log "Building Docker image..."
