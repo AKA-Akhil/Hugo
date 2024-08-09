@@ -244,7 +244,7 @@ themes/risotto/README.md:84:81 MD013/line-length Line length [Expected: 80; Actu
 themes/risotto/README.md:103:81 MD013/line-length Line length [Expected: 80; Actual: 107]
 themes/risotto/README.md:104:81 MD013/line-length Line length [Expected: 80; Actual: 126]
 themes/risotto/README.md:108:81 MD013/line-length Line length [Expected: 80; Actual: 210]
-Fri Aug  9 08:26:05 PM IST 2024: Building Docker image...
+Fri Aug  9 08:27:14 PM IST 2024: Building Docker image...
 #0 building with "desktop-linux" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
@@ -252,7 +252,7 @@ Fri Aug  9 08:26:05 PM IST 2024: Building Docker image...
 #1 DONE 0.0s
 
 #2 [internal] load metadata for docker.io/library/ubuntu:22.04
-#2 DONE 1.8s
+#2 DONE 1.1s
 
 #3 [internal] load .dockerignore
 #3 transferring context: 2B done
@@ -262,7 +262,7 @@ Fri Aug  9 08:26:05 PM IST 2024: Building Docker image...
 #4 DONE 0.0s
 
 #5 [internal] load build context
-#5 transferring context: 94.90kB 0.1s done
+#5 transferring context: 98.85kB 0.1s done
 #5 DONE 0.1s
 
 #6 [2/8] RUN apt-get update &&     apt-get install -y     wget     git     gcc     g++     build-essential     make     curl     unzip
@@ -284,23 +284,21 @@ Fri Aug  9 08:26:05 PM IST 2024: Building Docker image...
 #11 CACHED
 
 #12 [8/8] COPY . .
-#12 DONE 0.2s
+#12 DONE 0.1s
 
 #13 exporting to image
 #13 exporting layers 0.1s done
-#13 writing image sha256:dfed2482d625548bc65a562b2785816faf9c5aa285a49f55165fe7c9a871e86c done
-#13 naming to docker.io/library/my-hugo-site 0.0s done
-#13 DONE 0.2s
+#13 writing image sha256:fd647ab170f05d5887bbb9ab05344171b6a44cbabf7127504c4d6aea08449a93
+#13 writing image sha256:fd647ab170f05d5887bbb9ab05344171b6a44cbabf7127504c4d6aea08449a93 done
+#13 naming to docker.io/library/my-hugo-site done
+#13 DONE 0.1s
 
-View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/jjkcfphh3qw6fey8zjqyhyvb9
-Fri Aug  9 08:26:07 PM IST 2024: Stopping existing Docker container...
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/k74g6esob8md8fovmcvcl3ku7
+Fri Aug  9 08:27:16 PM IST 2024: Stopping existing Docker container...
 Error response from daemon: No such container: my-hugo-site-container
 Error response from daemon: No such container: my-hugo-site-container
-Fri Aug  9 08:26:07 PM IST 2024: Running Docker container...
-64d030485234687d4d0d1757e05027e577497d1ccb789b6a0987b70ef9e5caf0
-Fri Aug  9 08:26:08 PM IST 2024: Testing Docker container...
-Fri Aug  9 08:26:18 PM IST 2024: Docker container test passed.
-Fri Aug  9 08:26:18 PM IST 2024: Cleaning up...
+Fri Aug  9 08:27:16 PM IST 2024: Running Docker container...
+7ddb4305478e094396eb26ca1e95d13a29745701c45611e1e46366c5de905055
+Fri Aug  9 08:27:16 PM IST 2024: Testing Docker container...
+Fri Aug  9 08:27:26 PM IST 2024: Docker container did not serve the website properly.
 my-hugo-site-container
-my-hugo-site-container
-Fri Aug  9 08:26:18 PM IST 2024: Deployment completed successfully.
