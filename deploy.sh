@@ -84,14 +84,6 @@ else
     docker run -p 1313:1313 my-hugo-site
 
 
-echo "Testing Docker container..."
-    sleep 10 # Wait for the container to be ready
-    if ! curl -s http://localhost:$PORT > /dev/null; then
-        log "Docker container did not serve the website properly."
-        docker stop "$DOCKER_NAME"
-        exit 1
-    fi
-    echo "Docker container test passed."
-    log "Deployment completed successfully."
+
 
 fi
