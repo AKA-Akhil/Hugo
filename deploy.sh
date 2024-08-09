@@ -1,10 +1,65 @@
+#!/bin/bash
 
-cd "$(dirname "$0")"
+# Define variables
+HUGO_SITE_DIR="/path/to/your/hugo/site"
+DOCKER_IMAGE_NAME="my-hugo-site"
+DOCKER_CONTAINER_NAME="my-hugo-site-container"
+LOG_FILE="/path/to/your/logfile.log"
+PORT=8080
 
-docker build -t my-hugo-site .
+# Function to log messages
+log() {
+  echo "$(date): $1" >> "$LOG_FILE"
+}
 
-docker stop my-hugo-site 2>/dev/null
-docker rm my-hugo-site 2>/dev/null
-ls
+# Navigate to Hugo site directory
+cd "$HUGO_SITE_DIR" || { log "Failed to change directory to Hugo site."; exit 1; }
 
-docker run -p 1313:1313 my-hugo-site
+# Code testing - Linting and Validation
+log "Starting code testing..."
+echo "Running Hugo tests..."
+hugo --gc --minify > "$LOG_FILE" 2>&1 || { log "Hugo site failed to build."; exit 1; }
+
+# Run markdownlint (ensure it is installed on your local machine)
+echo "Running markdownlint..."
+markdownlint '**/*.md' >> "$LOG_FILE" 2>&1
+if [ $? -ne 0 ]; then
+  log "Markdown linting failed."
+  echo "Markdown linting failed. Do you want to exit and fix it? (yes/no)"
+  read -r user_input
+  if [ "$user_input" = "yes" ]; then
+    exit 1
+  fi
+fi
+
+# Build Docker image
+log "Building Docker image..."
+docker build -t "$DOCKER_IMAGE_NAME" . >> "$LOG_FILE" 2>&1 || { log "Failed to build Docker image."; exit 1; }
+
+# Stop and remove existing container if running
+if docker ps -q --filter "name=$DOCKER_CONTAINER_NAME" > /dev/null; then
+  log "Stopping existing Docker container..."
+  docker stop "$DOCKER_CONTAINER_NAME" >> "$LOG_FILE" 2>&1
+  docker rm "$DOCKER_CONTAINER_NAME" >> "$LOG_FILE" 2>&1
+fi
+
+# Run Docker container
+log "Running Docker container..."
+docker run -d --name "$DOCKER_CONTAINER_NAME" -p "$PORT":80 "$DOCKER_IMAGE_NAME" >> "$LOG_FILE" 2>&1 || { log "Failed to run Docker container."; exit 1; }
+
+# Test Docker container
+log "Testing Docker container..."
+sleep 10 # Wait for the container to be ready
+if ! curl -s http://localhost:$PORT > /dev/null; then
+  log "Docker container did not serve the website properly."
+  docker stop "$DOCKER_CONTAINER_NAME" >> "$LOG_FILE" 2>&1
+  exit 1
+fi
+log "Docker container test passed."
+
+# Cleanup
+log "Cleaning up..."
+docker stop "$DOCKER_CONTAINER_NAME" >> "$LOG_FILE" 2>&1
+docker rm "$DOCKER_CONTAINER_NAME" >> "$LOG_FILE" 2>&1
+
+log "Deployment completed successfully."
