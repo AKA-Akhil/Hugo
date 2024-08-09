@@ -1,11 +1,11 @@
 #!/bin/bash
 
 # Define variables
-HUGO_SITE_DIR="/path/to/your/hugo/site"
+HUGO_SITE_DIR="."
 DOCKER_IMAGE_NAME="my-hugo-site"
 DOCKER_CONTAINER_NAME="my-hugo-site-container"
-LOG_FILE="/path/to/your/logfile.log"
-PORT=8080
+LOG_FILE="./deploy.log"
+PORT=1313
 
 # Function to log messages
 log() {
@@ -45,7 +45,7 @@ fi
 
 # Run Docker container
 log "Running Docker container..."
-docker run -d --name "$DOCKER_CONTAINER_NAME" -p "$PORT":80 "$DOCKER_IMAGE_NAME" >> "$LOG_FILE" 2>&1 || { log "Failed to run Docker container."; exit 1; }
+docker run -d --name "$DOCKER_CONTAINER_NAME" -p "$PORT":13 "$DOCKER_IMAGE_NAME" >> "$LOG_FILE" 2>&1 || { log "Failed to run Docker container."; exit 1; }
 
 # Test Docker container
 log "Testing Docker container..."
