@@ -53,12 +53,8 @@ if [ $? -ne 0 ]; then
         fi
         echo "Docker container test passed."
 
-        # Cleanup
-        echo "Cleaning up..."
-        docker stop "$DOCKER_NAME"
-        docker rm "$DOCKER_NAME"
-
-        log "Deployment completed successfully."
+        # Provide URL to access the site
+        echo "Your site is available at: http://localhost:$PORT"
     else
         echo "Invalid response. Exiting."
         exit 1
@@ -85,10 +81,8 @@ else
     fi
     echo "Docker container test passed."
 
-    # Cleanup
-    echo "Cleaning up..."
-    docker stop "$DOCKER_NAME"
-    docker rm "$DOCKER_NAME"
+    # Provide URL to access the site
+    echo "Your site is available at: http://localhost:$PORT"
 
     log "Deployment completed successfully."
 fi
