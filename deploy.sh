@@ -2,8 +2,7 @@
 
 # Define variables
 HUGO_SITE_DIR="."
-DOCKER_IMAGE_NAME="my-hugo-site"
-DOCKER_CONTAINER_NAME="my-hugo-site-container"
+DOCKER_NAME="my-hugo-site"
 LOG_FILE="./deploy.log"
 PORT=1313
 
@@ -37,33 +36,33 @@ if [ $? -ne 0 ]; then
 
         # Build Docker image
         echo "Building Docker image..."
-        docker build -t "$DOCKER_IMAGE_NAME" . || { log "Failed to build Docker image."; exit 1; }
+        docker build -t "$DOCKER_NAME" . || { log "Failed to build Docker image."; exit 1; }
 
         # Stop and remove existing container if running
-        if docker ps -q --filter "name=$DOCKER_CONTAINER_NAME" > /dev/null; then
+        if docker ps -q --filter "name=$DOCKER_NAME" > /dev/null; then
             echo "Stopping existing Docker container..."
-            docker stop "$DOCKER_CONTAINER_NAME"
-            docker rm "$DOCKER_CONTAINER_NAME"
+            docker stop "$DOCKER_NAME"
+            docker rm "$DOCKER_NAME"
         fi
 
         # Run Docker container
         echo "Running Docker container..."
-        docker run -d --name "$DOCKER_CONTAINER_NAME" -p "$PORT":1313 "$DOCKER_IMAGE_NAME" || { log "Failed to run Docker container."; exit 1; }
+        docker run -d --name "$DOCKER_NAME" -p "$PORT":1313 "$DOCKER_NAME" || { log "Failed to run Docker container."; exit 1; }
 
         # Test Docker container
         echo "Testing Docker container..."
         sleep 10 # Wait for the container to be ready
         if ! curl -s http://localhost:$PORT > /dev/null; then
             log "Docker container did not serve the website properly."
-            docker stop "$DOCKER_CONTAINER_NAME"
+            docker stop "$DOCKER_NAME"
             exit 1
         fi
         echo "Docker container test passed."
 
         # Cleanup
         echo "Cleaning up..."
-        docker stop "$DOCKER_CONTAINER_NAME"
-        docker rm "$DOCKER_CONTAINER_NAME"
+        docker stop "$DOCKER_NAME"
+        docker rm "$DOCKER_NAME"
 
         log "Deployment completed successfully."
     else
@@ -75,33 +74,33 @@ else
     
     # Build Docker image
     echo "Building Docker image..."
-    docker build -t "$DOCKER_IMAGE_NAME" . || { log "Failed to build Docker image."; exit 1; }
+    docker build -t "$DOCKER_NAME" . || { log "Failed to build Docker image."; exit 1; }
 
     # Stop and remove existing container if running
-    if docker ps -q --filter "name=$DOCKER_CONTAINER_NAME" > /dev/null; then
+    if docker ps -q --filter "name=$DOCKER_NAME" > /dev/null; then
         echo "Stopping existing Docker container..."
-        docker stop "$DOCKER_CONTAINER_NAME"
-        docker rm "$DOCKER_CONTAINER_NAME"
+        docker stop "$DOCKER_NAME"
+        docker rm "$DOCKER_NAME"
     fi
 
     # Run Docker container
     echo "Running Docker container..."
-    docker run -d --name "$DOCKER_CONTAINER_NAME" -p "$PORT":1313 "$DOCKER_IMAGE_NAME" || { log "Failed to run Docker container."; exit 1; }
+    docker run -d --name "$DOCKER_NAME" -p "$PORT":1313 "$DOCKER_NAME" || { log "Failed to run Docker container."; exit 1; }
 
     # Test Docker container
     echo "Testing Docker container..."
     sleep 10 # Wait for the container to be ready
     if ! curl -s http://localhost:$PORT > /dev/null; then
         log "Docker container did not serve the website properly."
-        docker stop "$DOCKER_CONTAINER_NAME"
+        docker stop "$DOCKER_NAME"
         exit 1
     fi
     echo "Docker container test passed."
 
     # Cleanup
     echo "Cleaning up..."
-    docker stop "$DOCKER_CONTAINER_NAME"
-    docker rm "$DOCKER_CONTAINER_NAME"
+    docker stop "$DOCKER_NAME"
+    docker rm "$DOCKER_NAME"
 
     log "Deployment completed successfully."
 fi
