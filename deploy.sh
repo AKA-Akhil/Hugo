@@ -35,26 +35,60 @@ if [ $? -ne 0 ]; then
         echo "Continuing with Deployment."
 
         # Build Docker image
+        echo "Building Docker image..."
+        docker build -t "$DOCKER_NAME" . || { log "Failed to build Docker image."; exit 1; }
 
         # Run Docker container
-    docker build -t my-hugo-site .
-    docker run -p 1313:1313 my-hugo-site
-    echo "Testing Docker container..."
+        echo "Running Docker container..."
+        docker run -d -p "$PORT":1313 --name "$DOCKER_NAME" "$DOCKER_NAME" || { log "Failed to run Docker container."; exit 1; }
+
+        # Test Docker container
+        echo "Testing Docker container..."
         sleep 10 # Wait for the container to be ready
         if ! curl -s http://localhost:$PORT > /dev/null; then
             log "Docker container did not serve the website properly."
             docker stop "$DOCKER_NAME"
+            docker rm "$DOCKER_NAME"
             exit 1
         fi
         echo "Docker container test passed."
-        
-        
-        
-    
-    
+
+        # Cleanup
+        echo "Cleaning up..."
+        docker stop "$DOCKER_NAME"
+        docker rm "$DOCKER_NAME"
+
+        log "Deployment completed successfully."
+    else
+        echo "Invalid response. Exiting."
+        exit 1
+    fi
 else
-    
+    echo "Markdown linting passed. Proceeding with Deployment."
 
+    # Build Docker image
+    echo "Building Docker image..."
+    docker build -t "$DOCKER_NAME" . || { log "Failed to build Docker image."; exit 1; }
 
+    # Run Docker container
+    echo "Running Docker container..."
+    docker run -d -p "$PORT":1313 --name "$DOCKER_NAME" "$DOCKER_NAME" || { log "Failed to run Docker container."; exit 1; }
 
+    # Test Docker container
+    echo "Testing Docker container..."
+    sleep 10 # Wait for the container to be ready
+    if ! curl -s http://localhost:$PORT > /dev/null; then
+        log "Docker container did not serve the website properly."
+        docker stop "$DOCKER_NAME"
+        docker rm "$DOCKER_NAME"
+        exit 1
+    fi
+    echo "Docker container test passed."
+
+    # Cleanup
+    echo "Cleaning up..."
+    docker stop "$DOCKER_NAME"
+    docker rm "$DOCKER_NAME"
+
+    log "Deployment completed successfully."
 fi
