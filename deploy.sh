@@ -98,9 +98,6 @@ else
     echo "Docker container test passed."
 
     # Cleanup
-    echo "Cleaning up..."
-    docker stop "$DOCKER_NAME"
-    docker rm "$DOCKER_NAME"
     docker run -p 1313:1313 my-hugo-site
 
     log "Deployment completed successfully."
