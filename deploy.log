@@ -12,7 +12,7 @@ hugo v0.92.2+extended linux/amd64 BuildDate=2023-01-31T11:11:57Z VendorInfo=ubun
   Sitemaps         |  1  
   Cleaned          |  0  
 
-Total in 34 ms
+Total in 32 ms
 themes/risotto/exampleSite/content/_index.md:3:81 MD013/line-length Line length [Expected: 80; Actual: 107]
 themes/risotto/exampleSite/content/_index.md:16:81 MD013/line-length Line length [Expected: 80; Actual: 92]
 themes/risotto/exampleSite/content/_index.md:17:81 MD013/line-length Line length [Expected: 80; Actual: 145]
@@ -244,3 +244,58 @@ themes/risotto/README.md:84:81 MD013/line-length Line length [Expected: 80; Actu
 themes/risotto/README.md:103:81 MD013/line-length Line length [Expected: 80; Actual: 107]
 themes/risotto/README.md:104:81 MD013/line-length Line length [Expected: 80; Actual: 126]
 themes/risotto/README.md:108:81 MD013/line-length Line length [Expected: 80; Actual: 210]
+Fri Aug  9 08:21:29 PM IST 2024: Building Docker image...
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 685B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/ubuntu:22.04
+#2 DONE 1.2s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [1/8] FROM docker.io/library/ubuntu:22.04@sha256:340d9b015b194dc6e2a13938944e0d016e57b9679963fdeb9ce021daac430221
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 104.23kB 0.1s done
+#5 DONE 0.1s
+
+#6 [2/8] RUN apt-get update &&     apt-get install -y     wget     git     gcc     g++     build-essential     make     curl     unzip
+#6 CACHED
+
+#7 [3/8] RUN wget https://golang.org/dl/go1.21.8.linux-amd64.tar.gz &&     tar -C /usr/local -xzf go1.21.8.linux-amd64.tar.gz &&     rm go1.21.8.linux-amd64.tar.gz
+#7 CACHED
+
+#8 [4/8] RUN mkdir -p /go
+#8 CACHED
+
+#9 [5/8] RUN CGO_ENABLED=1 go install -tags extended github.com/gohugoio/hugo@latest
+#9 CACHED
+
+#10 [6/8] RUN hugo version
+#10 CACHED
+
+#11 [7/8] WORKDIR /site
+#11 CACHED
+
+#12 [8/8] COPY . .
+#12 DONE 0.2s
+
+#13 exporting to image
+#13 exporting layers 0.1s done
+#13 writing image sha256:9741b3d007cb03cf79bace368bd259461b079cb8a84e4239022ed5139b6c4aa7 done
+#13 naming to docker.io/library/my-hugo-site done
+#13 DONE 0.1s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/afniw67h37hf49z2b8rb4h7bz
+Fri Aug  9 08:21:31 PM IST 2024: Stopping existing Docker container...
+my-hugo-site-container
+my-hugo-site-container
+Fri Aug  9 08:21:31 PM IST 2024: Running Docker container...
+921e0b36dc1a532ac9609ad70679e1b32415f5e4152d4c75855f117ca0ee7a09
+Fri Aug  9 08:21:32 PM IST 2024: Testing Docker container...
