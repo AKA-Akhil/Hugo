@@ -36,21 +36,10 @@ if [ $? -ne 0 ]; then
 
         # Build Docker image
         echo "Building Docker image..."
-        docker build -t "$DOCKER_NAME" . || { log "Failed to build Docker image."; exit 1; }
 
-        # Stop and remove existing container if running
-        if docker ps -q --filter "name=$DOCKER_NAME" > /dev/null; then
-            echo "Stopping existing Docker container..."
-            docker stop "$DOCKER_NAME"
-            docker rm "$DOCKER_NAME"
-        fi
-
-        # Run Docker container
-        echo "Running Docker container..."
-        docker run -d --name "$DOCKER_NAME" -p "$PORT":1313 "$DOCKER_NAME" || { log "Failed to run Docker container."; exit 1; }
-
-        # Test Docker container
-        echo "Testing Docker container..."
+    docker build -t my-hugo-site .
+    docker run -p 1313:1313 my-hugo-site
+    echo "Testing Docker container..."
         sleep 10 # Wait for the container to be ready
         if ! curl -s http://localhost:$PORT > /dev/null; then
             log "Docker container did not serve the website properly."
@@ -58,31 +47,6 @@ if [ $? -ne 0 ]; then
             exit 1
         fi
         echo "Docker container test passed."
-
-        # Cleanup
-        echo "Cleaning up..."
-        docker stop "$DOCKER_NAME"
-        docker rm "$DOCKER_NAME"
-
-        log "Deployment completed successfully."
-    else
-        echo "Invalid response. Exiting."
-        exit 1
-    fi
-else
-    echo "Markdown linting passed. Proceeding with commit."
-    # Stop and remove existing container if running
-    if docker ps -q --filter "name=$DOCKER_NAME" > /dev/null; then
-        echo "Stopping existing Docker container..."
-        docker stop "$DOCKER_NAME"
-        docker rm "$DOCKER_NAME"
-    fi
-
-    # Run Docker container
-  
-    docker build -t my-hugo-site .
-    docker run -p 1313:1313 my-hugo-site
-
 
 
 
