@@ -12,7 +12,7 @@ hugo v0.92.2+extended linux/amd64 BuildDate=2023-01-31T11:11:57Z VendorInfo=ubun
   Sitemaps         |  1  
   Cleaned          |  0  
 
-Total in 31 ms
+Total in 34 ms
 themes/risotto/exampleSite/content/_index.md:3:81 MD013/line-length Line length [Expected: 80; Actual: 107]
 themes/risotto/exampleSite/content/_index.md:16:81 MD013/line-length Line length [Expected: 80; Actual: 92]
 themes/risotto/exampleSite/content/_index.md:17:81 MD013/line-length Line length [Expected: 80; Actual: 145]
