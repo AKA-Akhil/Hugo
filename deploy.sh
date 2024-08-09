@@ -82,5 +82,6 @@ else
     fi
     echo "Docker container test passed."
 
+
     log "Deployment completed successfully."
 fi
