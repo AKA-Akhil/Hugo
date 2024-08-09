@@ -23,9 +23,6 @@ hugo --gc --minify > "$LOG_FILE" 2>&1 || { log "Hugo site failed to build."; exi
 # Run markdownlint (ensure it is installed on your local machine)
 echo "Running markdownlint..."
 markdownlint '**/*.md' >> "$LOG_FILE" 2>&1
-# Run markdownlint (ensure it is installed on your local machine)
-echo "Running markdownlint..."
-markdownlint '**/*.md' >> "$LOG_FILE" 2>&1
 if [ $? -ne 0 ]; then
   echo "Markdown linting failed. Asking user to exit or continue..."
   read -p "Markdown linting failed. Do you want to exit and fix it? (yes/no) " response
@@ -41,7 +38,6 @@ if [ $? -ne 0 ]; then
   fi
 fi
 
-
 # Build Docker image
 log "Building Docker image..."
 docker build -t "$DOCKER_IMAGE_NAME" . >> "$LOG_FILE" 2>&1 || { log "Failed to build Docker image."; exit 1; }
@@ -55,7 +51,7 @@ fi
 
 # Run Docker container
 log "Running Docker container..."
-docker run -d --name "$DOCKER_CONTAINER_NAME" -p "$PORT":13 "$DOCKER_IMAGE_NAME" >> "$LOG_FILE" 2>&1 || { log "Failed to run Docker container."; exit 1; }
+docker run -d --name "$DOCKER_CONTAINER_NAME" -p "$PORT":1313 "$DOCKER_IMAGE_NAME" >> "$LOG_FILE" 2>&1 || { log "Failed to run Docker container."; exit 1; }
 
 # Test Docker container
 log "Testing Docker container..."
